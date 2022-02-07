@@ -1,15 +1,11 @@
+##Code for iterating over image files in a directory and cropping them (bottom up) by an arbitrary ratio
+
 import cv2
-import numpy as np
 from matplotlib import pyplot as plt
 import os
 
 path = "/home/stoffer/Pictures/images_for_pipeline/"
-image = cv2.imread(path + "lomarinopsis.png")
-print('img shape', image.shape)
-# cv2.imshow('orig', image)
-# cv2.waitKey(0)
-h = image.shape[0]
-w = image.shape[1]
+
 
 def crawl_dir_for_files(dir):
     img_dict = {}
@@ -21,6 +17,8 @@ def crawl_dir_for_files(dir):
     return img_dict
 
 def crop_bottom_half(image, ratio):
+    #image: is the image object itself - cv2.imread() or similar
+    #ratio:
     cropped_img = image[int(image.shape[0]/ratio):int(image.shape[0])]
     return cropped_img
 
