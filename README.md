@@ -22,3 +22,9 @@ This is a work in progress and modules will be added 'on the go'
 This script conforms to item 2 in the list above. The purpose is to acquire the part of the image where labels or text is stored.  
 
 The _crawl_dir_for_files()_ function returns a dictionary that is consumed in the for loop. Here each image is put through the _crop_bottom_half()_ function where each image is cropped. A ratio value of 2 will crop to the bottom half of the image. Chosing 1.5 will crop to the bottom half, and a high value will only shave off a few lines of pixels. 
+
+## The read_specimen_text.py script
+Here we have the first code that employs the Google Cloud Vision API service (GCV) for  
+reading an image. The GCV client.text_detection() method returns a dictionary of text elements  
+detected in the image.  
+I think this works well for specimen images where the images are cropped the region that contains labels.
