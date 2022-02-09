@@ -26,4 +26,4 @@ for word in img_for_GCV.text_annotations:
     print(d)
 
 img = Image.open("specimen_images/dacty.png")
-img.show()
+
