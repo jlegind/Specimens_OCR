@@ -8,7 +8,7 @@ import cv2
 
 
 img = cv2.imread('specimen_images/dacty.png')
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "your_GCV_token.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "jkl-specimen-ocr-a940a8d4649b.json"
 client = vision.ImageAnnotatorClient()
 
 def convert_to_GV_client_format(image):
@@ -26,4 +26,4 @@ for word in img_for_GCV.text_annotations:
     print(d)
 
 img = Image.open("specimen_images/dacty.png")
-
+img.show()
