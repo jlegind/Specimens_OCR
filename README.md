@@ -1,5 +1,6 @@
 # Specimens_OCR
-Pipeline for OCR'ing labels on specimen images 
+Pipeline for OCR'ing labels on specimen images.  
+This is a work in progress and modules will be added 'on the go' 
 
 ## Steps
 
