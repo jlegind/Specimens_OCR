@@ -26,4 +26,6 @@ The _crawl_dir_for_files()_ function returns a dictionary that is consumed in th
 ## The read_specimen_text.py script
 Here we have the first code that employs the Google Cloud Vision API service (GCV) for reading an image.  
 The GCV client.text_detection() method returns a dictionary of text elements detected in the image.  
-I think this works well for specimen images where the images are cropped the region that contains labels.
+I think this code works well for specimen images where the images are cropped the region that contains labels.  
+
+The next step is to extract text pieces that are species names...
