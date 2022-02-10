@@ -33,9 +33,8 @@ def parse_annotation_object(annotation_object):
     labels = annotation_object.text_annotations[0].description
 
     tt = []
-    # for j in labels:
-    #     tt.append(j)
     [tt.append(elem) for elem in labels]
+    
     agg = []
     listToStr = ''.join([str(elem) for elem in tt])
 
