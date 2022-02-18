@@ -32,5 +32,9 @@ for key in images_dict:
     cv2.imwrite('cropped_{}.png'.format(img_name), cropped)
 
     cv2.imshow(img_name, cropped)
-    cv2.waitKey(0)
+
+
+
+
+
 
