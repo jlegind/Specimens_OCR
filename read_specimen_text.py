@@ -3,12 +3,10 @@
 ## Hat tip : rikvikmath
 import os
 from google.cloud import vision
-from PIL import Image
 import cv2
 
 
-# input_img = cv2.imread('specimen_images/dacty.png')
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "jkl-specimen-ocr-a940a8d4649b.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "your_GCV_token.json"
 client = vision.ImageAnnotatorClient()
 
 def convert_to_GV_client_format(image):
@@ -20,21 +18,17 @@ def convert_to_GV_client_format(image):
     response = client.text_detection(image=roi_image)
     return response
 
-img = Image.open("specimen_images/dacty.png")
-img.show()
-
 ##################
 # string processing of GCV text
 ##################
 
 def parse_annotation_object(annotation_object):
-    '''Pull out the label text and convert it to a text
-    #string for further processing'''
+    '''Pull out the label text and convert it to a text string for further processing'''
     labels = annotation_object.text_annotations[0].description
 
     tt = []
     [tt.append(elem) for elem in labels]
-    
+
     agg = []
     listToStr = ''.join([str(elem) for elem in tt])
 
@@ -49,6 +43,7 @@ def parse_annotation_object(annotation_object):
 
 def execute_image_label_vision(input_img):
     #input image must by cv2.imread()
+    #Returns tuple containing the OCR text and the cropped input image
     annotation = convert_to_GV_client_format(input_img)
     res = parse_annotation_object(annotation)
-    return res
+    return res, input_img
