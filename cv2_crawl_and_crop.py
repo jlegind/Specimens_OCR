@@ -30,16 +30,8 @@ def exe_cropping(path_to_input_specimen_images):
         cropped_path = '/home/stoffer/OCR/Specimens_OCR/cropped_images'
         os.chdir(cropped_path)
         img_name = img_name.replace('.png', '')
-        print('cropped_{}'.format(img_name)) #remove the suffix part as it is now redundant
+
         cv2.imwrite('cropped_{}.png'.format(img_name), cropped)
-
-        cv2.imshow(img_name, cropped)
-
-    cv2.waitKey(0)
+    # cv2.waitKey(0)
     cropped_dict = crawl_dir_for_files(cropped_path)
-
     return cropped_dict
-
-
-
-
