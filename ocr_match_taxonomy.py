@@ -31,14 +31,12 @@ def look_up_species_names(labels, confidence_score=80):
         # elem = elem.encode()
         # elem = elem.decode()
         api_res = get_GBIF_taxonomic_lookup(elem)
-        # print('for loop', api_res, len(api_res))
 
         if ((len(api_res)>0) and (api_res['confidence_score'] > confidence_score)):
             # print('High confidence result: ', api_res)
             result_list.append(api_res)
     return result_list
 
-# race = look_up_species_name(labels)
 
 def check_for_api_cache_issues(results):
     #API servers can have cache issues so that different API requests return the exact same response.
@@ -49,5 +47,3 @@ def check_for_api_cache_issues(results):
     # Removes duplicates in the API result coming from API server caching issues
     return set_res
 
-# res = check_for_api_cache_issues(race)
-# print('final res = ', res)
