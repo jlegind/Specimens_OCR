@@ -41,4 +41,5 @@ The output of the script for the dacty.png im age would look like so:
 ```
 ['status': 'ACCEPTED', 'confidence_score': 98, 'submitted_string': 'Dactylorhiza maculata', 'rank': 'SPECIES', 'scientific_name': 'Dactylorhiza maculata (L.) Soó']
 ```
-
+### Limitations
+Handwritten labels cannot be handled at this point in time. This part is a work in progress. 
