@@ -6,7 +6,7 @@ from google.cloud import vision
 import cv2
 
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "your_GCV_token.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "jkl-specimen-ocr-a940a8d4649b.json"
 client = vision.ImageAnnotatorClient()
 
 def convert_to_GV_client_format(image):
@@ -23,27 +23,21 @@ def convert_to_GV_client_format(image):
 ##################
 
 def parse_annotation_object(annotation_object):
-    '''Pull out the label text and convert it to a text string for further processing'''
+    '''Param: an annotation object
+    Pull out the label text and convert it to a python list for further processing'''
     labels = annotation_object.text_annotations[0].description
+    #this line extracts the label text from the annotation object. It comes in a str format.
 
     tt = []
     [tt.append(elem) for elem in labels]
+    label_list = labels.split('\n')
 
-    agg = []
-    listToStr = ''.join([str(elem) for elem in tt])
-
-    for j in listToStr:
-        if j == '\n':
-            agg.append('|')
-        else:
-            agg.append(j)
-
-    str_agg = ''.join([str(elem) for elem in agg])
-    return str_agg
+    return label_list
 
 def execute_image_label_vision(input_img):
     #input image must by cv2.imread()
     #Returns tuple containing the OCR text and the cropped input image
     annotation = convert_to_GV_client_format(input_img)
     res = parse_annotation_object(annotation)
+
     return res, input_img
