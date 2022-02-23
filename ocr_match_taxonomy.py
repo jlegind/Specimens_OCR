@@ -12,7 +12,7 @@ def get_GBIF_taxonomic_lookup(candidate_name, output_dict={}):
     rson = response.json()
 
     if rson['matchType'] != "NONE":
-        print(rson['matchType'], type(rson['matchType']))
+        print(rson['matchType'], 'match for:', candidate_name)
         output_dict['submitted_string'] = candidate_name
         output_dict['scientific_name'] = rson['scientificName']
         output_dict['rank'] = rson['rank']
@@ -20,20 +20,16 @@ def get_GBIF_taxonomic_lookup(candidate_name, output_dict={}):
         output_dict['confidence_score'] = rson['confidence']
     return output_dict
 
-# labels = ['CLF104120', 'HERBIERS UNIVERSITAIRES DE CLERMONT-FERRAND CLF104120.', 'Dactylorhiza maculata', '(L.) SOÓ', 'subsp. maculata', 'Famille Orchidaceae', 'Identification Thébaud G.', 'Récolteur Thomas M.', 'Date 2012', 'Date 6/7/2012', 'Pays France', 'Départerment Puy-de-Dôme', 'Commune Le Monestier', 'Virennes (Le Monestier, 63), PSET n°2.', 'note', 'RECOLNAT', '']
-
 def look_up_species_names(labels, confidence_score=80):
     '''Based on the label list from the read_specimen_text module, this function looks up each element from the list in the GBIF taxonomic API via
      the get_GBIF_taxonomic_lookup() function.
     '''
     result_list = []
     for elem in labels:
-        # elem = elem.encode()
-        # elem = elem.decode()
         api_res = get_GBIF_taxonomic_lookup(elem)
 
         if ((len(api_res)>0) and (api_res['confidence_score'] > confidence_score)):
-            # print('High confidence result: ', api_res)
+
             result_list.append(api_res)
     return result_list
 
