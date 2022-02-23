@@ -7,15 +7,13 @@ This is a work in progress and modules will be added 'on the go'
 1. Obtain image with labels
 2. Crop to label section of image - (cv2_crawl_and_crop.py)
 3. OCR the cropped image to Google Cloud Vision API (or other OCR service) - (read_specimen_text.py)
-4. Output is one or more text blocks
-5. OCR output of interest:
+4. OCR output of interest:
    - species name
    - date
    - catalog number
-   - institution name
-   - collector name    
-6. The text tokens could be run against a look-up service such as the GBIF taxonomy API to determine if the text block contains a species name.
-    The institution name might be determined by testing the text against the GBIF GRSCICOL API service.
+      
+5. The text tokens could be run against a look-up service such as the GBIF taxonomy API to determine if the text block contains a species name.
+    
 
 ## The CV2_specimen_OCR script
 This script conforms to item 2 in the list above. The purpose is to acquire the part of the image where labels or text is stored.  
@@ -28,8 +26,19 @@ The _crawl_dir_for_files()_ function returns a dictionary that is consumed in th
 Here we have the first code that employs the Google Cloud Vision API service (GCV) for reading an image.  
 The GCV client.text_detection() method returns a dictionary of text elements detected in the image.  
 I think this code works well for specimen images where the images are cropped the region that contains labels.
-The output of the _execute_image_label_vision()_ function is a list of the   
+The output of the _execute_image_label_vision()_ function is a list of the OCR'ed labels, like example below:  
 ```
 ['CLF104120', 'HERBIERS UNIVERSITAIRES DE CLERMONT-FERRAND CLF104120.', 'Dactylorhiza maculata', '(L.) SOÓ', 'subsp. maculata', 'Famille Orchidaceae', 'Identification Thébaud G.', 'Récolteur Thomas M.', 'Date 2012', 'Date 6/7/2012', 'Pays France', 'Départerment Puy-de-Dôme', 'Commune Le Monestier', 'Virennes (Le Monestier, 63), PSET n°2.', 'note', 'RECOLNAT', '']
 ```
-The next step is to extract text pieces that are species names...
+The next step is to extract text pieces that are species names.
+
+## ocr_match_taxonomy.py script 
+Each element of the label list is put through the GBIF name_search API (example):  
+https://api.gbif.org/v1/species/match?name=Grapsus%20grapsus  
+Most search strings from the OCR list will not return a good result, which is why a 'confidence' bar is set. The default value is a confidence score of 80.
+This value can of course be tweaked.  
+The output of the script for the dacty.png im age would look like so:  
+```
+['status': 'ACCEPTED', 'confidence_score': 98, 'submitted_string': 'Dactylorhiza maculata', 'rank': 'SPECIES', 'scientific_name': 'Dactylorhiza maculata (L.) Soó']
+```
+
