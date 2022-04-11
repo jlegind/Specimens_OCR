@@ -15,35 +15,35 @@ def crop_LRTB(img_path, segment, percentage):
     #segment is which image part is requested Left, Right, Top, Bottom
     #percentage is how much of the image you wish to RETAIN. The rest to be cropped away (for example 33% would by the integer 33)
     img = cv2.imread(img_path)
-    print('in crop_LRTB')
+
     height, width, channels = img.shape
     to_pixel = percentage / 100
-    cv2.imshow('orig', img)
+    cv2.imshow('original', img)
     cv2.waitKey(0)
 
-    H_shear = int(width * to_pixel)
+    h_shear = int(width * to_pixel)
+    #H_shear is for segmenting along horizontal direction
     #horizontal axis operations
-    if segment == 'Left':
-        left = img[:, :H_shear]
+    if segment == 'left':
+        left = img[:, :h_shear]
         lh, lw, _ = left.shape
         return left
 
-    if segment == 'Right':
-        right = img[:, H_shear:]
-        return (segment, right)
+    if segment == 'right':
+        right = img[:, h_shear:]
+        return right
 
 # this is vertical division
 
     v_shear =  int(height * to_pixel)
 
-    if segment == 'Top':
+    if segment == 'top':
         top = img[:v_shear, :]
-        return (segment, top)
+        return top
 
-    if segment == 'Bottom':
+    if segment == 'bottom':
         bottom = img[v_shear:, :]
         bh, bw, _ = bottom.shape
-        print(f"Original height = {height} , width = {width} \n. Ratio: to_deci: {to_pixel} | {v_shear} - Percentage is: {percentage} , Cropped height : {bh} , crop width: {bw}")
         return bottom
 
 
@@ -51,42 +51,33 @@ images_dict = crawl_dir_for_files('/home/stoffer/specimen_ocr/Specimens_OCR/spec
 print(images_dict)
 output_dir = '/home/stoffer/specimen_ocr/Specimens_OCR/cropped_images'
 
-for key in images_dict:
-    img_path = images_dict[key]
-    img_name = key
-    print(f'img path:{img_path} + img name: {img_name}')
-    img = cv2.imread(img_path)
-    # cv2.imshow('to crop', img)
-    # cv2.waitKey(0)
-    shp = img.shape
-    print(img_path, shp)
-    print('im path: ', img_path)
-    crop_amount = 18
-    cropped = crop_LRTB(img_path, 'Bottom', crop_amount)
-    crshp = cropped.shape
-    print('cropped shape = ', crshp)
+#exe logic
+def run_cropping_ops(images_dict, crop_amount = 33, crop_part='bottom', output_dir=''):
+    #for driving the other functions
+    #crop amount is the percentage of image remaining after crop operation
+    for key in images_dict:
+        img_path = images_dict[key]
+        img_name = key
+        print(f'img path:{img_path} + img name: {img_name}')
+        img = cv2.imread(img_path)
+        # cv2.imshow('to crop', img)
+        # cv2.waitKey(0)
+        shp = img.shape
+        print(img_path, shp)
 
-    cv2.imshow('crop', cropped)
-    cv2.waitKey(0)
-    # print('cropped img dimensions: ', cropped.shape)
-    cropped_path = output_dir
-    os.chdir(cropped_path)
-    img_name = img_name.replace('.png', '')
-    print(img_name)
+        crop_amount = crop_amount
+        cropped = crop_LRTB(img_path, 'left', crop_amount)
 
-    cv2.imwrite('bottom cropped_{}_{}.png'.format(crop_amount, img_name), cropped)
-    print('end of ', img_path)
-# res = crop_LRTB('specimen_images/majalis.png', 'Top', 50)
-# cv2.imshow(res[0], res[1])
-# # cv2.imshow('Bottom', bottom)
-# #
-# # # saving all the images
-# # # cv2.imwrite() function will save the image
-# # # into your pc
-# # cv2.imwrite('top.jpg', top)
-# # cv2.imwrite('bottom.jpg', bottom)
-# # cv2.imwrite('right.jpg', right_part)
-# # cv2.imwrite('left.jpg', left_part)
-# cv2.waitKey(0)
+        cv2.imshow('crop', cropped)
+        cv2.waitKey(0)
 
+        cropped_path = output_dir
+        os.chdir(cropped_path)
+        img_name = img_name.replace('.png', '')
 
+        cv2.imwrite('{} cropped_{}_{}.png'.format(crop_part, crop_amount, img_name), cropped)
+        print('end of ', img_path)
+
+#
+#run_cropping_ops(images_dict, crop_amount=50, crop_part='left', output_dir=output_dir)
+#
