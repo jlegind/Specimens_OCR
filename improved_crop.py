@@ -72,8 +72,7 @@ def exe_cropping(specimen_images, cropped_dir):
         img_name = key
         print(f'img path:[{img_path}]')
         img = cv2.imread(img_path)
-        # cv2.imshow('to crop', img)
-        # cv2.waitKey(0)
+
         shp = img.shape
         print(img_path, 'shape: ', shp)
         print('im path: ', img_path)
@@ -84,7 +83,7 @@ def exe_cropping(specimen_images, cropped_dir):
 
         cv2.imshow('crop', cropped[1])
         cv2.waitKey(0)
-        # print('cropped img dimensions: ', cropped.shape)
+
         cropped_path = os.path.abspath(output_dir)
         print('pre abs: --- ', output_dir)
         print('post abs: --- ', cropped_path)
@@ -92,27 +91,11 @@ def exe_cropping(specimen_images, cropped_dir):
         img_name = img_name.replace('.png', '')
         print('IMG_name minus suffix: ', img_name)
         print('writing to ? ', '{}/top cropped_{}.png'.format(cropped_path, img_name))
-        cv2.imwrite('{}/{} cropped_{}.png'.format(cropped_path, cropped[0], img_name), cropped[1])
+        cv2.imwrite('{}/top cropped_{}.png'.format(cropped_path, img_name), cropped[1])
         print('end of ', img_path)
     img_list = crawl_dir_for_files(cropped_path)
     return img_list
 
 
-
-
-
-
-# res = crop_LRTB('specimen_images/majalis.png', 'Top', 50)
-# cv2.imshow(res[0], res[1])
-# # cv2.imshow('Bottom', bottom)
-# #
-# # # saving all the images
-# # # cv2.imwrite() function will save the image
-# # # into your pc
-# # cv2.imwrite('top.jpg', top)
-# # cv2.imwrite('bottom.jpg', bottom)
-# # cv2.imwrite('right.jpg', right_part)
-# # cv2.imwrite('left.jpg', left_part)
-# cv2.waitKey(0)
 
 
