@@ -6,7 +6,7 @@ from google.cloud import vision
 import cv2
 
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "jkl-specimen-ocr-a940a8d4649b.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "jkl-specimen-ocr-e327dc829575.json"
 client = vision.ImageAnnotatorClient()
 
 def convert_to_GV_client_format(image):
