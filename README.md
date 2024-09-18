@@ -44,4 +44,5 @@ The output of the script for the dacty.png im age would look like so:
 ### Limitations
 Handwritten labels cannot be handled at this point in time. This part is a work in progress.  
 Currently I am looking into the Keras deep learning framework for a solution.
+I have been thinking that if the handwritten documents belong to a small group of individuals, then the individual handwriting style ought to be identifiable. Each individual style could then be it's own font and from there you might have a reliable handwriting OCR method.
 
